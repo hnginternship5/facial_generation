@@ -24,7 +24,7 @@ def main(age,region,sex):
     elif region=='white':
         data_files = genwhite.glob(os.path.join(data_dir, 'white/*.jpg'))
         shape = len(data_files), IMAGE_WIDTH, IMAGE_HEIGHT, 3
-        genwhite.train(epochs, batch_size, z_dim, learning_rate, beta1, genwhite.get_batches,shape)
+        genwhite.train(epochs, batch_size, z_dim, learning_rate, beta1,shape)
     else:
         click.echo("Enter either black or white as region")
 
