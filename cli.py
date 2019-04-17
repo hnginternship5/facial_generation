@@ -17,7 +17,7 @@ def main(age,region,gender):
     z_dim = 100
     learning_rate = 0.0002
     beta1 = 0.5
-    epochs = 10
+    epochs = 15
     genders=['male','female']
     regions=['black','white']
     if (region in regions) and (gender in genders):
