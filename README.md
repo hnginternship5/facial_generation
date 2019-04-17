@@ -4,14 +4,16 @@ This is a face generation application based on a race and gender supplied as inp
 
 # Usage
 
-# Using Conda
+# Virtual Environments
 
-## Create an environment
+### ****Using Conda***
+
+### Create an environment
 
 ```conda create --name nameofenvironment --file requirements.txt```
 
-## Activate
+### Activate
 ```conda activate nameofenvironment```
 
-## Run
+### Run
 ```python cli.py age race gender```
