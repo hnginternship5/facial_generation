@@ -12,7 +12,7 @@ data_dir='/images'
 # Image configuration
 IMAGE_HEIGHT = 28
 IMAGE_WIDTH = 28
-data_files = glob(os.path.join(data_dir, 'white/*.jpg'))
+data_files = glob(os.path.join(data_dir, 'white/*.png'))
 shape = len(data_files), IMAGE_WIDTH, IMAGE_HEIGHT, 3
 
 def get_image(image_path, width, height, mode):

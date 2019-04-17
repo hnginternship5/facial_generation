@@ -18,12 +18,12 @@ def main(age,region,sex):
     z_dim = 100
     learning_rate = 0.0002
     beta1 = 0.5
-    epochs = 2
+    epochs = 5000
     if region=='black':
         pass
         #genblack.train(epochs, batch_size, z_dim, learning_rate, beta1, get_batches, shape)
     elif region=='white':
-        data_files = genwhite.glob(os.path.join(data_dir, 'white/*.jpg'))
+        data_files = genwhite.glob(os.path.join(data_dir, 'white/*.png'))
         shape = len(data_files), IMAGE_WIDTH, IMAGE_HEIGHT, 3
         with tf.Session() as sess:
             sess.run(tf.global_variables_initializer())
