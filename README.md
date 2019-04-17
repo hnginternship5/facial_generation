@@ -1,19 +1,21 @@
 # ML facial Generation
 
-This is a face generation application based on a race and gender supplied as input.
+ML algorithn to generate faces based on race and gender.
 
-# Usage
+# Installation
+This can be done using virtual environments. 
+The steps with different virtual environments are shown below
 
-# Virtual Environments
+## Virtual Environments
 
-### ****Using Conda***
+### ****Conda***
 
-### Create an environment
+#### Create an environment
 
 ```conda create --name nameofenvironment --file requirements.txt```
 
-### Activate
+#### Activating environment
 ```conda activate nameofenvironment```
 
-### Run
+# Run
 ```python cli.py age race gender```
