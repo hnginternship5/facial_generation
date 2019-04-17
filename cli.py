@@ -2,6 +2,7 @@ import click
 #import genblack
 import genwhite
 import os
+import tensorflow as tf
 
 @click.command()
 @click.argument('age')
@@ -24,7 +25,10 @@ def main(age,region,sex):
     elif region=='white':
         data_files = genwhite.glob(os.path.join(data_dir, 'white/*.jpg'))
         shape = len(data_files), IMAGE_WIDTH, IMAGE_HEIGHT, 3
-        genwhite.train(epochs, batch_size, z_dim, learning_rate, beta1, genwhite.get_batches,shape)
+        with tf.Session() as sess:
+            sess.run(tf.global_variables_initializer())
+        with tf.Graph().as_default():
+            genwhite.train(epochs, batch_size, z_dim, learning_rate, beta1,shape)
     else:
         click.echo("Enter either black or white as region")
 

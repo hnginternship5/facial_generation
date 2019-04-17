@@ -5,7 +5,7 @@ from matplotlib import pyplot
 from PIL import Image
 import numpy as np
 import tensorflow as tf
-
+import helper   #this file is in the folder...helper.py
 # import dataset
 data_dir='/images'
 
@@ -192,10 +192,12 @@ def show_generator_output(sess, n_images, input_z, out_channel_dim):
     z_dim = input_z.get_shape().as_list()[-1]
     example_z = np.random.uniform(-1, 1, size=[n_images, z_dim])
 
-    sample = sess.run(
+    samples = sess.run(
         generator(input_z, out_channel_dim, False),
         feed_dict={input_z: example_z})
-    pyplot.imshow(sample)
+    pyplot.imshow(helper.images_square_grid(samples))
+    pyplot.show()
+    
 
 def train(epoch_count, batch_size, z_dim, learning_rate, beta1, data_shape):
     """
