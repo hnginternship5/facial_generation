@@ -8,7 +8,7 @@ import tensorflow as tf
 @click.argument('region')
 @click.argument('gender')
 def main(age,region,gender):
-    data_dir='/images'
+    data_dir='./images'
     # Image configuration
     IMAGE_HEIGHT = 28
     IMAGE_WIDTH = 28
@@ -17,7 +17,7 @@ def main(age,region,gender):
     z_dim = 100
     learning_rate = 0.0002
     beta1 = 0.5
-    epochs = 5
+    epochs = 10
     genders=['male','female']
     regions=['black','white']
     if (region in regions) and (gender in genders):
