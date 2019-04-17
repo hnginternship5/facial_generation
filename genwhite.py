@@ -12,8 +12,10 @@ data_dir='/images'
 # Image configuration
 IMAGE_HEIGHT = 28
 IMAGE_WIDTH = 28
-data_files = glob(os.path.join(data_dir, 'white/*.jpg'))
+data_files = glob('images/**/*.*', recursive=True)
 shape = len(data_files), IMAGE_WIDTH, IMAGE_HEIGHT, 3
+
+# print(len(data_files))
 
 def get_image(image_path, width, height, mode):
     """
@@ -223,7 +225,7 @@ def train(epoch_count, batch_size, z_dim, learning_rate, beta1, data_shape):
                 _ = sess.run(d_opt, feed_dict={input_real: batch_images, input_z: batch_z})
                 _ = sess.run(g_opt, feed_dict={input_real: batch_images, input_z: batch_z})
                 
-                if steps % 400 == 0:
+                if steps % 20 == 0:
                     # At the end of every 10 epochs, get the losses and print them out
                     train_loss_d = d_loss.eval({input_z: batch_z, input_real: batch_images})
                     train_loss_g = g_loss.eval({input_z: batch_z})
