@@ -1,0 +1,8 @@
+python=3.6
+click
+requests
+tqdm
+tensorflow
+numpy
+matplotlib
+pillow
