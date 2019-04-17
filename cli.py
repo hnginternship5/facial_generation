@@ -38,6 +38,7 @@ def main(age,region,sex):
                 genwhite.train(epochs, batch_size, z_dim, learning_rate, beta1,shape)
 
     elif region=='white':
+<<<<<<< HEAD
         if sex == 'female':
             data_files = genwhite.glob(os.path.join(data_dir, 'white/female/*.jpg'))
             data_files.extend(genwhite.glob('*.png'))
@@ -54,6 +55,14 @@ def main(age,region,sex):
                 sess.run(tf.global_variables_initializer())
             with tf.Graph().as_default():
                 genwhite.train(epochs, batch_size, z_dim, learning_rate, beta1,shape)
+=======
+        data_files = genwhite.glob(os.path.join(data_dir, 'white/*.jpg'))
+        shape = len(data_files), IMAGE_WIDTH, IMAGE_HEIGHT, 3
+        with tf.Session() as sess:
+            sess.run(tf.global_variables_initializer())
+        with tf.Graph().as_default():
+            genwhite.train(epochs, batch_size, z_dim, learning_rate, beta1,shape)
+>>>>>>> 978b78311df3e9aea514b579c0135548ba36ab03
     else:
         click.echo("Enter either black or white as region")
 
