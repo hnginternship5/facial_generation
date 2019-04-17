@@ -1,14 +1,10 @@
 import click
-#import genblack
-import genwhite
 import os
-import tensorflow as tf
-
 @click.command()
 @click.argument('age')
 @click.argument('region')
-@click.argument('sex')
-def main(age,region,sex):
+@click.argument('gender')
+def main(age,region,gender):
     data_dir='/images'
     # Image configuration
     IMAGE_HEIGHT = 28
@@ -18,44 +14,23 @@ def main(age,region,sex):
     z_dim = 100
     learning_rate = 0.0002
     beta1 = 0.5
-    epochs = 20
-    if region=='black':
-        if sex == 'female':
-            data_files = genwhite.glob(os.path.join(data_dir, 'black/female/*.jpg'))
-            data_files.extend(genwhite.glob('*.png'))
-            shape = len(data_files), IMAGE_WIDTH, IMAGE_HEIGHT, 3
-            with tf.Session() as sess:
-                sess.run(tf.global_variables_initializer())
-            with tf.Graph().as_default():
-                genwhite.train(epochs, batch_size, z_dim, learning_rate, beta1,shape)
-        elif sex == 'male':
-            data_files = genwhite.glob(os.path.join(data_dir, 'black/male/*.jpg'))
-            data_files.extend(genwhite.glob('*.png'))
-            shape = len(data_files), IMAGE_WIDTH, IMAGE_HEIGHT, 3
-            with tf.Session() as sess:
-                sess.run(tf.global_variables_initializer())
-            with tf.Graph().as_default():
-                genwhite.train(epochs, batch_size, z_dim, learning_rate, beta1,shape)
-
-    elif region=='white':
-        if sex == 'female':
-            data_files = genwhite.glob(os.path.join(data_dir, 'white/female/*.jpg'))
-            data_files.extend(genwhite.glob('*.png'))
-            shape = len(data_files), IMAGE_WIDTH, IMAGE_HEIGHT, 3
-            with tf.Session() as sess:
-                sess.run(tf.global_variables_initializer())
-            with tf.Graph().as_default():
-                genwhite.train(epochs, batch_size, z_dim, learning_rate, beta1,shape)
-        elif sex == 'male':
-            data_files = genwhite.glob(os.path.join(data_dir, 'white/male/*.jpg'))
-            data_files.extend(genwhite.glob('*.png'))
-            shape = len(data_files), IMAGE_WIDTH, IMAGE_HEIGHT, 3
-            with tf.Session() as sess:
-                sess.run(tf.global_variables_initializer())
-            with tf.Graph().as_default():
-                genwhite.train(epochs, batch_size, z_dim, learning_rate, beta1,shape)
-    else:
+    epochs = 100
+    genders=['male','female']
+    regions=['black','white']
+    if (region in regions) and (gender in genders):
+        import generateface
+        import tensorflow as tf
+        data_files = generateface.glob(os.path.join(data_dir, '%s/%s/*.*' %(region,gender)))
+        shape = len(data_files), IMAGE_WIDTH, IMAGE_HEIGHT, 3
+        with tf.Session() as sess:
+            sess.run(tf.global_variables_initializer())
+        with tf.Graph().as_default():
+            generateface.train(epochs, batch_size, z_dim, learning_rate, beta1,shape)
+    else :
         click.echo("Enter either black or white as region")
+        click.echo('Enter either male or female as gender')
+        click.echo('E.g 24 black female')
+
 
 if __name__=='__main__':
     main()
