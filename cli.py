@@ -1,5 +1,8 @@
 import click
 import os
+import generateface
+import tensorflow as tf
+
 @click.command()
 @click.argument('age')
 @click.argument('region')
@@ -14,12 +17,10 @@ def main(age,region,gender):
     z_dim = 100
     learning_rate = 0.0002
     beta1 = 0.5
-    epochs = 100
+    epochs = 2
     genders=['male','female']
     regions=['black','white']
     if (region in regions) and (gender in genders):
-        import generateface
-        import tensorflow as tf
         data_files = generateface.glob(os.path.join(data_dir, '%s/%s/*.*' %(region,gender)))
         shape = len(data_files), IMAGE_WIDTH, IMAGE_HEIGHT, 3
         with tf.Session() as sess:

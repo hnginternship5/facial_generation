@@ -1,19 +1,19 @@
 #import the libraries
 import os
-# os.environ['KMP_DUPLICATE_LIB_OK']='True'
 from glob import glob
 from matplotlib import pyplot
 from PIL import Image
-import math
 import numpy as np
 import tensorflow as tf
+import math
 # import dataset
 data_dir='/images'
 
 # Image configuration
 IMAGE_HEIGHT = 28
 IMAGE_WIDTH = 28
-data_files = glob(os.path.join(data_dir, 'white/*.jpg'))
+data_files = glob('images/**/*.*', recursive=True)
+
 shape = len(data_files), IMAGE_WIDTH, IMAGE_HEIGHT, 3
 
 def get_image(image_path, width, height, mode):
@@ -260,5 +260,5 @@ def train(epoch_count, batch_size, z_dim, learning_rate, beta1, data_shape):
                           "Discriminator Loss: {:.4f}...".format(train_loss_d),
                           "Generator Loss: {:.4f}".format(train_loss_g))
                     
-            _ = show_generator_output(sess, 1, input_z, data_shape[3])
+        _ = show_generator_output(sess, 1, input_z, data_shape[3])
 
