@@ -5,7 +5,7 @@ from matplotlib import pyplot
 from PIL import Image
 import numpy as np
 import tensorflow as tf
-import helper   #this file is in the folder...helper.py
+import math
 # import dataset
 data_dir='/images'
 
@@ -13,9 +13,8 @@ data_dir='/images'
 IMAGE_HEIGHT = 28
 IMAGE_WIDTH = 28
 data_files = glob('images/**/*.*', recursive=True)
-shape = len(data_files), IMAGE_WIDTH, IMAGE_HEIGHT, 3
 
-# print(len(data_files))
+shape = len(data_files), IMAGE_WIDTH, IMAGE_HEIGHT, 3
 
 def get_image(image_path, width, height, mode):
     """
@@ -187,6 +186,31 @@ def model_opt(d_loss, g_loss, learning_rate, beta1):
 
     return d_train_opt, g_train_opt
 
+def images_square_grid(images, mode='RGB'):
+    """
+    Helper function to save images as a square grid (visualization)
+    """
+    # Get maximum size for square grid of images
+    save_size = math.floor(np.sqrt(images.shape[0]))
+    # Scale to 0-255
+    images = (((images - images.min()) * 255) / (images.max() - images.min())).astype(np.uint8)
+    # Put images in a square arrangement
+    try:
+        images_in_square = np.reshape(
+                images[:save_size*save_size],
+                (save_size, save_size, images.shape[1], images.shape[2], images.shape[3]))
+        # Combine images to grid image
+        new_im = Image.new(mode, (images.shape[1] * save_size, images.shape[2] * save_size))
+        for col_i, col_images in enumerate(images_in_square):
+            for image_i, image in enumerate(col_images):
+                im = Image.fromarray(image, mode)
+                new_im.paste(im, (col_i * images.shape[1], image_i * images.shape[2]))
+
+        return new_im
+    except:
+        print ('the shape of your images are '+ str(images.shape))
+        print('check image dimensions')
+
 def show_generator_output(sess, n_images, input_z, out_channel_dim):
     """
     Show example output for the generator
@@ -197,8 +221,10 @@ def show_generator_output(sess, n_images, input_z, out_channel_dim):
     samples = sess.run(
         generator(input_z, out_channel_dim, False),
         feed_dict={input_z: example_z})
-    pyplot.imshow(helper.images_square_grid(samples))
+    pyplot.imshow(images_square_grid(samples))
     pyplot.show()
+
+
     
 
 def train(epoch_count, batch_size, z_dim, learning_rate, beta1, data_shape):
@@ -225,7 +251,7 @@ def train(epoch_count, batch_size, z_dim, learning_rate, beta1, data_shape):
                 _ = sess.run(d_opt, feed_dict={input_real: batch_images, input_z: batch_z})
                 _ = sess.run(g_opt, feed_dict={input_real: batch_images, input_z: batch_z})
                 
-                if steps % 20 == 0:
+                if steps % 400 == 0:
                     # At the end of every 10 epochs, get the losses and print them out
                     train_loss_d = d_loss.eval({input_z: batch_z, input_real: batch_images})
                     train_loss_g = g_loss.eval({input_z: batch_z})
