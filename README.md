@@ -18,18 +18,16 @@ Anaconda
 
 Install Anaconda python distribution on your system
 
-Create a virtual environment called env.
+Create a virtual environment and install dependencies.
 
 ```
-python -m venv env
+conda create --name nameofenvironment --file requirements.txt
 ```
 
 Activate the virtual environment
 
 ```
-LINUX/Mac: source env/bin/activate
-
-Windows: env\Scripts\activate
+conda activate nameofenvironment
 ```
 
 Upgrade to the latest pip
@@ -38,32 +36,16 @@ Upgrade to the latest pip
 pip install --upgrade pip
 ```
 
-Install dependencies using requirements file
-
-```
-pip install -r requirements.txt
-``` 
 **Note: Your virtual environment must always be activated before running any command**
 
 # Usage
 
-# Virtual Environments
-
-### ****Using Conda***
-
-### Create an environment
-
-```conda create --name nameofenvironment --file requirements.txt```
-
-### Activate
-```conda activate nameofenvironment```
-
-### Run
+## Run
 ```python cli.py age race gender```
 
 # Issues
 
-Mac Users
+## Mac Users
 
 If you get the following error when running
 ```
